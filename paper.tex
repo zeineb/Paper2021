@@ -1,0 +1,59 @@
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+\section{Introduction}
+Secure software can be obtained out of two distinct processes:
+Security by Design, and Security by Certification.
+The former approach has been quite extensively formalized as it builds upon models,, which are verified to ensure security properties are attained from and from which software is then derived manually or automatically. In contrast, the latter approach has been quite always informal in both specifying security best practices ans verifying that the code produced conforms to them.
+Building secure software is much more difficult than finding vulnerabilities and weaknesses
+in a program. It requires establishing the mechanisms to protect the software and avoid flaws
+that can be the source of serious vulnerabilities. Secure software can be obtained out of two
+distinct processes: security by design, and security by certification. The former approach
+has been quite extensively formalized as it builds upon models, which are verified to ensure
+
+security properties are attained and from which software is then derived manually or auto-
+matically. In contrast, the latter approach has always been quite informal in both specifying
+
+security best practices and verifying that the code produced conforms to them. The former
+technique, also called model-driven engineering for security, has been extensively developed in
+the academic community, and follows a specify, model, verify, and then implement approach.
+It is well suited to classical software development featuring for instance an organized V-cycle,
+and security objectives generally correspond to security properties expected from software
+
+components or communication protocols (see for instance [155]). In contrast, the latter tech-
+nique follows a build, then detect flaws approach, based on the description of security best
+
+practices and programming style and idioms. Apart from the safety-critical domain, this
+
+approach has received a much wider acceptance in the industry because security is often ad-
+dressed from a developer point of view, in a programmatic style, rather than from a security
+
+architect perspective, as through a comprehensive model. A number of security guidelines is
+defined forming a program-oriented security policy that the developer has to adhere to. This
+model is also adapted to very different styles of software engineering including agile methods.
+Unfortunately, this technique lacks automation and formality in the way best practices are
+specified and verified.
+In our work, we focus on the latter approach and describe how security guidelines might
+be captured by security experts and verified formally by developers. Our technique relies
+on abstracting actions in a program based on modularity, and on combining model checking
+together with control and information flow analysis. Our goal is to formalize the existing
+body of knowledge in security best practices using formulas in the MCL language and to
+conduct formal verification of the conformance of programs with such security guidelines.
+\section{Security guidelines}
+\subsection {Formal specification}
+\subsection {Construction of the program model}
+\subsection {Formal verification}
+\section{Formal specification}
+\subsection {The Model Checking Language}
+\subsection {Construction of the formal specification of security guidelines in MCL}
+\section{Program model Construction}
+\subsection {Program Dependence Graph}$
+\subsection {Introducing new dependencies}
+\subsection { Automatic annotations}
+\subsection {Generation of the Labelled Transition System}
+\section{Formal Verification of the security guidelines}
+\section{Conclusion}
+\end{document}
