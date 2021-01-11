@@ -49,7 +49,8 @@ Let us consider this guideline:
  </em> \cite{https://cwe.mitre.org/data/definitions/404.html}
 It mentions that the developer needs to free all used resources with the objective of releasing resources properly.
 If we want to formalize it in MCL:
-
+use(resource) -> free(resource)
+This formalization explains that for each use of resource, it should be followed by a release of it.
 
 \subsection {Construction of the program model}
 \subsection {Formal verification}
