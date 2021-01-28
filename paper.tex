@@ -152,6 +152,114 @@ point in time by a write on this file (Write !msg), then a violation should be r
 Note that this MCL formula is built upon regular expressions operators (., *), and note
 also that they are familiar to software developers.
 
+\subsection{Construction of the Formal Specification of Security
+Guidelines in Model Checking Language}
+Having presented the formalism that we adopt to specify the security guidelines, we
+examine its applicability on a number of guidelines that we have considered. Before
+proceeding to the formal specification, we explain the methodology that we provide
+to the security expert to build the MCL mathematical formulas from the guidelines
+descriptions.
+The formalization flow is the following:
+
+– Extraction of the keywords (action patterns) and the key-concepts from the guide-
+line textual description
+
+– Construction of the basic MCL formula
+– Construction of the MCL formula involving explicit and implicit dependencies
+Each step as well as the transition from one step to another are depicted in detail in
+the next sections.
+The proposed formalization in the MCL language presents the key concepts required by
+each of the guidelines. The challenge is to define those concepts and actions and have
+a unified yet extensible set of keywords that can be used by the security expert(s) to
+formalize the guidelines. We tried to reduce the expert intervention by introducing the
+Security Knowledge Base (See Section 7.5) which is a central repository containing the
+different labels used for composing the guidelines, together with their description and
+semantic meaning.
+
+\subsubsection{Extracting the Key-concepts}
+First, Brian, the security expert, is faced with the guideline written in natural lan-
+guage, and needs to identify the key elements at the heart of the guideline (sensitive
+
+data, security mechanism, etc.) before proceeding to the specification. Brian refers
+to the Security Knowledge Base (SKB) (see Section 7.5), and more specifically to the
+security guideline patterns and the labels that are used to build the formulas; they
+can be used to guide Brian when building the formulas based on the existing patterns.
+This operation will result in a basic formula; the term basic means that the formula
+involves the most intuitive and simplistic pattern that considers only the data assets
+
+to be protected. The basic formula does not involve the explicit or the implicit de-
+pendencies that data might have. For instance, if the data was assigned to a variable (implicitly or explicitly), this data dependency will not be captured in the basic formula.
+Let us take a closer look at some of the guidelines that we have surveyed, and explain
+how Brian proceeds to build them. We have considered the three guidelines IDS03-J:Do
+not log unsanitized user input [30], MSC62-J:Store passwords using a hash
+function [40] and OWASP: Store unencrypted keys away from the encrypted
+data [119]. These three guidelines illustrate several concepts, such as the notion of
+single or multiple parameters, patterns, etc.
+Let us now look at the keywords and the concepts that Brian can extract from the textual
+description, and provide explanation for each of them. It is important to mention the
+following; considering only the textual title or the name of the guidelines is not sufficient,
+we need also to look at the detailed textual explanations that provide very useful details,
+such as the cryptographic algorithms that should be used, or the hashing method to be
+applied in a reliable manner. For example, in the guideline MSC62-J:Store passwords
+using a hash function [40], the hashing should be implemented through a robust
+and reliable algorithm, and those details appear within the detailed description of the
+
+guideline. CERT provides the following: Avoid defective functions such as the Message-
+Digest Algorithm (MD5). Hash functions such as Secure Hash Algorithm (SHA)-1 and
+
+SHA-2 are maintained by the National Security Agency and are currently considered
+safe. However, SHA-1 is no longer a reliable hashing algorithm, it got recently broken
+1 2
+From this perspective, if we consider that any password hashing operation as safe, even
+using a non-reliable algorithm, then this might lead to a violation of the password’s
+integrity. This brought further reflection on the dictionary enrichment considering a
+multitude of elements such as: the hashing/encryption algorithm to use in what context,
+the key length, etc. To give another example, the usage of DES for symmetric encryption
+purposes in indicated in our SKB as prohibited, as well as the hashing through MD5.
+
+\subsubsection{Building the Basic Formulas}
+Once the key-concepts are retrieved from the guideline textual description, Brian might
+refer to the Security Knowledge Base to check whether the extracted words have a
+matching entry. He might for instance find synonyms or semantically equivalent words
+(labels) that can use to build the formula. Having selected the key concepts, Brian
+proceeds to building the more natural and intuitive MCL formula.
+Since establishing a single dictionary is the key to building the formulas, we identified
+the need to have a central repository containing the guidelines relevant details, such
+as the patterns and the labels used to build the guidelines formulas. Brian can access
+this central repository (Security Knowledge Base 7.5) and can use it as a reference model. When formalizing the guidelines, Brian extracts the key concepts from the
+textual description, and at this level, he consults the dictionary to see if the identified
+concepts have already been used in other guidelines patterns, and to check if there exists
+a pattern that he can make use of to build the formula. If not, Brian introduces the
+new labels, and attributes semantics reflecting the meaning of those new labels. We
+need to stress that our central repository (Security Knowledge Base in section 7.5) can
+be extended to cover a wide range of security concepts.
+
+\subsubsection{Patterns for the Formal Specification of Security Guidelines}
+When formalizing the security guidelines described in the previous section, we have
+noticed that there are recurring patterns. For instance, the notion of precedence arises
+in different guidelines, and constrains the order of actions.
+Since we aim at leveraging the workload and bringing assistance and guidance to the se-
+curity expert, we decided to further simplify the formalization of the security guidelines
+
+and propose property patterns. Thanks to these, the security expert will hopefully not
+need to have full knowledge about the formal language expressiveness nor to master its
+idioms. He would eventually prefer to have more guidance on how to use the language
+features. This would improve the transformation of the security guidelines from natural
+language to formulas.
+Similarly to Dywer’s work \cite{Dwyer::1999}, we propose a catalog of patterns for security guidelines.
+
+These patterns identified in [103] will allow programmers who are not necessarily ex-
+perts in formal language to read a formal specification. As proposed in [103], we encode
+
+guidelines as a collection of property patterns intended to simplify the specification ac-
+tivity. These patterns belong to particular classes: Absence, Existence, and Universality
+
+and occur in various scopes: Before, After, and Between. Those classes reflect specific
+requirements such as the absence of an action, precedence of actions, response of an
+action that is triggered by another action, etc. The proposed patterns were adopted by
+the Bandera Specification Language \cite{corbett2002expressing}.
+
+
 \subsection {Formal verification}
 \section{Formal specification}
 \subsection {The Model Checking Language}
@@ -160,4 +268,13 @@ also that they are familiar to software developers.
 \subsection {Verification Framework}
 \subsection {Related Work}
 \section{Conclusion}
+
+
+%% The Bibliography
+%% ==> You need a file 'literature.bib' for this.
+%% ==> You need to run BibTeX for this (Project | Properties... | Uses BibTeX)
+\addcontentsline{toc}{chapter}{Bibliography} %'Bibliography' into toc
+%\nocite{*} %Even non-cited BibTeX-Entries will be shown.
+\bibliographystyle{plain} %Style of Bibliography: plain / apalike / amsalpha / ...
+\bibliography{literature} %You need a file 'literature.bib' for this.
 \end{document}
