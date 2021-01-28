@@ -53,6 +53,105 @@ use(resource) -> free(resource)
 This formalization explains that for each use of resource, it should be followed by a release of it.
 
 \subsection {From Security Requirements to Verifiable Properties}
+Transforming the informal description of security guidelines into exploitable mathemat-
+ical formulas is an important part in this thesis work. We stressed in Chapter 2 the
+
+main issues that we have identified with respect to security guidelines, and the difficul-
+ties that can occur when they are interpreted and implemented by software developers,
+
+and verified afterwards by testers or code auditors. In addition, security guideline pre-
+sentations differ from one source to another, hence, there is a need for a centralized and
+
+uniform approach to represent them. In this Chapter, we present the methodology that
+we provide to the security expert in order to help him build the guideline formulas. We focus on the extensibility as well as on the automation that we can bring to this phase
+
+to strip away the difficulties which the security expert can face when building the guide-
+lines formulas, especially those that involve dependent data flows. We explain in details
+
+the flow of operations, and pinpoint the effort we have undertaken to automate the
+formalization of security guidelines. For a clear understanding of the specification flow,
+we consider concrete examples of guidelines that Brian, the security expert, formalizes,
+starting from their informal description.
+The main idea behind this Chapter is to transform the security guidelines written in
+
+natural language, into exploitable mathematical formulas. The advantage of this for-
+malization is to strip away the ambiguities of natural language, and to increase the
+
+precision. This phase produces a formal specification of the security guidelines.
+
+Since the guidelines that we want to specify reflect the desired program behavior, we
+can conclude that what is needed is a formalism that allows to describe the execution
+of the program. Those guidelines are generally abstracted away in formal models as
+verification problems are undecidable for infinite systems.
+Adopting Temporal Logics [105] seems a wise direction as they are suited to specify with
+rigorous semantics the desired properties in the form of sequences of atomic propositions
+
+or statements representing the behavior of the system. In the literature, different tem-
+poral logics have been studied and proposed for the specification of program properties.
+
+"Temporal" refers to the sequencing and chronological order of states, and not to the
+notion of physical time.
+Different Temporal Logic formalisms exist and are widely adopted, such as LTL and
+CTL, with their different variants. The syntax of linear temporal logic (LTL) [125] is
+defined inductively using the standard boolean operators, and the temporal operators
+X(next), F (eventually), G (always OR globally), and U (strong until) by the following
+abstract syntax equation:
+
+φ := p | ¬p | p ∧ q | Xp | Gp | Fp | p U q
+
+\subsection{Model Checking Language}
+In this section, we explain in more details the Model Checking Language (MCL) that
+we adopted for the formal specification of security guidelines. The formalism that we
+have used is very intuitive in the sense that buidling formulas is close to the natural
+processing of texts. We adopt the MCL logic [103] that addresses this crucial matter of
+representing and handling data. It allows reasoning naturally about systems described
+in value-passing process algebras such as LOTOS.
+
+MCL (Model Checking Language) is an extension of the alternation-free regular μ-
+calculus with facilities for manipulating data in a manner consistent with their usage
+
+in the system definition. The MCL formulas are logical formulas built over regular
+expressions using boolean operators, modality operators (the necessity operator denoted
+by ([ ]) and the possibility operator denoted by (h i) and the maximal fixed point
+operator (denoted by μ).
+By using data, one can specify state machines with an infinite action alphabet, in
+which quantification over data can be used, and propositions and variables may have
+data parameters. MCL is a powerful language that combines value passing mechanisms
+together with regular expressions, and constructs similar to programming languages
+Most of the guidelines we studied can be expressed as usual safety properties that we
+encode in the MCL formalism by [φ]false formula, stating the absence of bad execution
+sequences characterized by regular formulas φ or as basic liveness properties, encoded
+by hφitrue and stating the existence of good execution sequences characterized by φ.
+Regular formulas φ are built over action formulas and the standard regular expression
+
+operators namely concatenation (.), choice (|), and transitive-reflexive closure (∗). Ac-
+tion formulas are built over action patterns and boolean connectors. Action patterns are
+
+of two different kinds: action patterns for matching values denoted by ({A !e1 . . .!en}),
+or action patterns for extracting and storing values denoted by ({A ?x1 :T1 . . .?xn :Tn}),
+where A is the action name, ei are expressions (data variables or functions), xi are data
+variables and Ti are types, namely Int, Bool, String. The true constant is used to
+match a value of any action formula.
+Syntax of the Model Checking Language Now if we go back to the property "No
+writes on a file after it is closed" and formalize it with MCL. The parameterized action
+patterns that we define and use to build our formula are:
+
+– {File ?file : String} designates the action pattern for storing the file path "file"
+of type String
+– {Write !file} designates the action pattern of writing on the file file
+– {Close !file} designates the action pattern of closing the file file
+
+[true*.{File ?file:String}.(not({Close !msg}))*.{Write !msg}] false
+
+This formula specifies that if the file file is not closed, and that the action of writing on
+this file occurred, then this formula is false. This means that if we capture this behavior
+in our program, then a violation should be detected. The "(true*)" indicates any action.
+The formula can be read as follows: after any action occurring, if there exists a File file
+(File ?file:String), and that this file is not closed (not(Close !msg)), followed at a some
+point in time by a write on this file (Write !msg), then a violation should be raised.
+Note that this MCL formula is built upon regular expressions operators (., *), and note
+also that they are familiar to software developers.
+
 \subsection {Formal verification}
 \section{Formal specification}
 \subsection {The Model Checking Language}
